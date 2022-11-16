@@ -1,6 +1,6 @@
 NAME	=	pathfinder
 
-CFLG	=	-std=c11 $(addprefix -W, all extra error pedantic) -g
+CFLG	=	-std=c11 $(addprefix -W, all extra pedantic) -g
 
 SRC_DIR	= src
 INC_DIR	= inc
@@ -20,11 +20,9 @@ install: $(LMX_A) $(NAME)
 
 $(NAME): $(OBJ_FILES)
 	@clang $(CFLG) $(OBJ_FILES) -L$(LMX_DIR) -lmx -o $@
-	@printf "\r\33[2K\033[32;1mpathfinder created!\033[0m\n"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC_FILES)
 	@clang $(CFLG) -c $< -o $@ -I$(INC_DIR) -I$(LMX_INC)
-	@printf "compile...\n"
 
 $(OBJ_FILES): | $(OBJ_DIR)
 
@@ -36,12 +34,10 @@ $(LMX_A):
 	
 clean:
 	@rm -rf $(OBJ_DIR)
-	@printf "\033[31;1mpathfinder deleted\033[0m\n"
 
 uninstall:
 	@make -sC $(LMX_DIR) $@
 	@rm -rf $(OBJ_DIR)
 	@rm -rf $(NAME)
-	@printf "\033[31;1mpathfinder unistalled\033[0m\n"
 
 reinstall: uninstall all
